@@ -1,6 +1,7 @@
 # -*- coding: utf-8 -*-
 
 from helpers.sessionHelper import SessionHelper
+from helpers.projectHelper import ProjectHelper
 
 from selenium import webdriver
 
@@ -21,6 +22,7 @@ class Application:
             raise ValueError("Unrecognized browser %s" % browser)
         # self.wd.implicitly_wait(5)
         self.session = SessionHelper(self)
+        self.project = ProjectHelper(self)
         self.baseurl= baseurl
 
     # Разрушение фикстуры
