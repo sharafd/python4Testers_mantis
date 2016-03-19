@@ -9,7 +9,7 @@ class ProjectHelper:
     def __init__(self, app):
         self.app = app
 
-    project_cache = None
+    projects_cache = None
 
     # Открытие страницы добавления проекта
     def open_add_project_page(self):
@@ -55,13 +55,31 @@ class ProjectHelper:
     # Cписок проектов
     def get_project_list(self):
         self.app.wd.get(self.app.baseurl + "/manage_proj_page.php")
-        if self.project_cache is None:
-          self.project_cache = []
+        if self.projects_cache is None:
+          self.projects_cache = []
           for element in self.app.wd.find_elements_by_xpath("//table[@class='width100']/tbody/tr[starts-with(@class, 'row-') and not(contains(@class, '-category'))]"):
               cells = element.find_elements_by_tag_name("td")
               name = cells[0].text
               status = cells[1].text
               view_status = cells[3].text
               description = cells[4].text
-              self.project_cache.append(Project(name = name.strip(), status = status.strip(), view_status = view_status.strip(), description = description.strip()))
-        return list(self.project_cache)
+              self.projects_cache.append(Project(name = name.strip(), status = status.strip(), view_status = view_status.strip(), description = description.strip()))
+        return list(self.projects_cache)
+
+    # Существует ли проект
+    def is_project_exist(self, project):
+       if  self.app.wd.find_elements_by_link_text(project.name):
+           return True
+       else:
+           return False
+
+    # Удаление проректа по имеии
+    def delete_project_by_name(self, project):
+        self.app.wd.find_element_by_link_text(project.name).click()
+        self.app.wd.find_element_by_xpath("//input[@class='button' and @value='Delete Project']").click()
+        self.app.wd.find_element_by_css_selector("input.button").click()
+        self.projects_cache = None
+
+    # Принудительная очистка кеша
+    def clear_cache(self):
+        self.projects_cache = None
