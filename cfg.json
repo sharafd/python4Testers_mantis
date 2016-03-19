@@ -1,0 +1,9 @@
+{
+  "web": {
+    "baseurl": "http://192.168.1.25/mantisbt-1.2.19"
+  },
+  "webadmin": {
+    "username": "administrator",
+    "password": "root"
+  }
+}
