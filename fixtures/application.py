@@ -2,6 +2,7 @@
 
 from helpers.sessionHelper import SessionHelper
 from helpers.projectHelper import ProjectHelper
+from fixtures.soap import soapHelper
 
 from selenium import webdriver
 
@@ -23,6 +24,7 @@ class Application:
         # self.wd.implicitly_wait(5)
         self.session = SessionHelper(self)
         self.project = ProjectHelper(self)
+        self.soap = soapHelper(self)
         self.baseurl= baseurl
 
     # Разрушение фикстуры
